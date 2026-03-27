@@ -20,14 +20,14 @@ export function TopNavbar({ circuitBreakerActive = true }: TopNavbarProps) {
 
   return (
     <>
-      <header className="h-14 flex items-center justify-between border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-3 sm:px-6">
-        <div className="flex items-center gap-3">
-          <SidebarTrigger className="md:hidden" />
-          <div className="leading-tight">
-            <div className="text-sm font-semibold text-foreground">OpenChainGuard</div>
+      <header className="h-14 flex min-w-0 items-center justify-between gap-2 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-3 sm:px-6">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+          <SidebarTrigger className="md:hidden shrink-0" />
+          <div className="min-w-0 leading-tight">
+            <div className="truncate text-sm font-semibold text-foreground">OpenChainGuard</div>
           </div>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-3">
           <Badge variant="outline" className="hidden sm:inline-flex text-xs font-medium gap-1.5 px-3 py-1.5">
             <div className="w-2 h-2 rounded-full bg-primary" />
             Base
@@ -38,10 +38,17 @@ export function TopNavbar({ circuitBreakerActive = true }: TopNavbarProps) {
               <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-destructive" />
             )}
           </button>
-          <button onClick={() => setWalletOpen(true)} className="flex items-center gap-2 bg-primary text-primary-foreground px-3 h-9 rounded-lg text-xs font-medium hover:bg-primary/90 transition-colors">
-            <Wallet className="w-3.5 h-3.5" />
-            <span className="font-mono hidden sm:inline">{truncateAddress('0xDev10000000000000000000000000000000000001')}</span>
-            <ChevronDown className="w-3 h-3" />
+          <button
+            type="button"
+            onClick={() => setWalletOpen(true)}
+            className="flex max-w-[100vw] items-center gap-1.5 rounded-lg bg-primary px-2.5 py-2 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:h-9 sm:gap-2 sm:px-3"
+          >
+            <Wallet className="h-3.5 w-3.5 shrink-0" />
+            <span className="hidden max-w-[9rem] truncate font-mono sm:inline">
+              {truncateAddress("0xDev10000000000000000000000000000000000001")}
+            </span>
+            <span className="font-mono sm:hidden">0x…0001</span>
+            <ChevronDown className="h-3 w-3 shrink-0" />
           </button>
         </div>
       </header>

@@ -32,9 +32,9 @@ export default function AgentDetail() {
   const avatarUrl = getAvatarUrl(agent.id);
 
   return (
-    <div>
+    <div className="min-w-0">
       <button
-        onClick={() => navigate('/')}
+        onClick={() => navigate("/console")}
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" /> Back to Directory
@@ -71,7 +71,7 @@ export default function AgentDetail() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="flex w-full flex-wrap items-center gap-4 sm:gap-6 lg:w-auto">
             <RiskGauge score={agent.kyaScore} size="lg" label="KYA Score" color="hsl(var(--primary))" />
             <RiskGauge score={agent.reputationScore} size="lg" label="Reputation" color="hsl(var(--success))" />
           </div>

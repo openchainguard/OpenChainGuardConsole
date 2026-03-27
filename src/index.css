@@ -110,6 +110,17 @@
 }
 
 @layer utilities {
+  .safe-pb {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+  .safe-pt {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-px {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
   .pulse-red {
     animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
