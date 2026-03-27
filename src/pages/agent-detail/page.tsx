@@ -40,7 +40,7 @@ export default function AgentDetail() {
         <ArrowLeft className="w-4 h-4" /> Back to Directory
       </button>
 
-      <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-5 py-5">
+      <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-4 sm:px-5 py-5">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
           <div className="flex items-center gap-4 min-w-0">
             <div className="h-11 w-11 rounded-full overflow-hidden bg-muted text-foreground flex items-center justify-center text-sm font-semibold flex-shrink-0">
@@ -61,7 +61,7 @@ export default function AgentDetail() {
               </span>
             </div>
             <div className="min-w-0">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <h1 className="text-xl font-semibold text-foreground truncate">{agent.name}</h1>
                 <StatusBadge status={agent.status} />
               </div>
@@ -71,7 +71,7 @@ export default function AgentDetail() {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             <RiskGauge score={agent.kyaScore} size="lg" label="KYA Score" color="hsl(var(--primary))" />
             <RiskGauge score={agent.reputationScore} size="lg" label="Reputation" color="hsl(var(--success))" />
           </div>
@@ -110,11 +110,11 @@ export default function AgentDetail() {
             <h2 className="text-sm font-medium text-foreground">Transaction Feed</h2>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[760px] text-sm">
               <thead>
                 <tr className="border-b bg-muted/30">
                   {["Time", "Decision", "Destination", "Amount", "Token", "Risk"].map((h) => (
-                    <th key={h} className="text-left px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
+                    <th key={h} className="text-left px-4 sm:px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
                       {h}
                     </th>
                   ))}
@@ -123,7 +123,7 @@ export default function AgentDetail() {
               <tbody className="divide-y">
                 {agentTxns.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-5 py-10 text-center text-sm text-muted-foreground">
+                    <td colSpan={6} className="px-4 sm:px-5 py-10 text-center text-sm text-muted-foreground">
                       No transactions
                     </td>
                   </tr>
@@ -135,30 +135,30 @@ export default function AgentDetail() {
                         className="hover:bg-muted/20 transition-colors cursor-pointer"
                         onClick={() => setExpandedTx(expandedTx === tx.id ? null : tx.id)}
                       >
-                        <td className="px-5 py-3 text-xs text-muted-foreground whitespace-nowrap">
+                        <td className="px-4 sm:px-5 py-3 text-xs text-muted-foreground whitespace-nowrap">
                           {new Date(tx.timestamp).toLocaleTimeString()}
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
                           <StatusBadge status={tx.decision} />
                         </td>
-                        <td className="px-5 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">
+                        <td className="px-4 sm:px-5 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">
                           {truncateAddress(tx.destination)}
                         </td>
-                        <td className="px-5 py-3 text-sm font-medium text-foreground whitespace-nowrap">
+                        <td className="px-4 sm:px-5 py-3 text-sm font-medium text-foreground whitespace-nowrap">
                           {formatUSDC(tx.amount)}
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
                           <Badge variant="outline" className="text-[10px]">
                             {tx.token}
                           </Badge>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
                           <RiskGauge score={tx.riskScore} />
                         </td>
                       </tr>
                       {expandedTx === tx.id && tx.policyChecks && (
                         <tr key={`${tx.id}-details`}>
-                          <td colSpan={6} className="px-5 pb-4 pt-0">
+                          <td colSpan={6} className="px-4 sm:px-5 pb-4 pt-0">
                             <div className="mt-2 rounded-lg border bg-muted/20 p-3">
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {tx.policyChecks.map((check) => (

@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { toast } from "sonner";
 
 interface TopNavbarProps {
@@ -19,14 +20,15 @@ export function TopNavbar({ circuitBreakerActive = true }: TopNavbarProps) {
 
   return (
     <>
-      <header className="h-14 flex items-center justify-between border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6">
+      <header className="h-14 flex items-center justify-between border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-3 sm:px-6">
         <div className="flex items-center gap-3">
+          <SidebarTrigger className="md:hidden" />
           <div className="leading-tight">
             <div className="text-sm font-semibold text-foreground">OpenChainGuard</div>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <Badge variant="outline" className="text-xs font-medium gap-1.5 px-3 py-1.5">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Badge variant="outline" className="hidden sm:inline-flex text-xs font-medium gap-1.5 px-3 py-1.5">
             <div className="w-2 h-2 rounded-full bg-primary" />
             Base
           </Badge>
@@ -38,7 +40,7 @@ export function TopNavbar({ circuitBreakerActive = true }: TopNavbarProps) {
           </button>
           <button onClick={() => setWalletOpen(true)} className="flex items-center gap-2 bg-primary text-primary-foreground px-3 h-9 rounded-lg text-xs font-medium hover:bg-primary/90 transition-colors">
             <Wallet className="w-3.5 h-3.5" />
-            <span className="font-mono">{truncateAddress('0xDev10000000000000000000000000000000000001')}</span>
+            <span className="font-mono hidden sm:inline">{truncateAddress('0xDev10000000000000000000000000000000000001')}</span>
             <ChevronDown className="w-3 h-3" />
           </button>
         </div>

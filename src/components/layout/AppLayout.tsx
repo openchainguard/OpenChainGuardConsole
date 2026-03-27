@@ -11,7 +11,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         <div className="flex-1 flex flex-col min-w-0">
           <TopNavbar circuitBreakerActive={true} />
           <main className="flex-1 overflow-auto">
-            <div className="mx-auto w-full max-w-6xl p-6">
+            <div className="mx-auto w-full max-w-6xl p-3 sm:p-6">
               {children}
             </div>
           </main>
