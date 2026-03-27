@@ -19,7 +19,7 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
 const navItems = [
-  { title: "Agent Directory", url: "/", icon: LayoutGrid },
+  { title: "Agent Directory", url: "/console", icon: LayoutGrid },
   { title: "Policy Editor", url: "/policy", icon: SlidersHorizontal },
   { title: "Approval Queue", url: "/approvals", icon: ShieldCheck },
   { title: "Audit Log", url: "/audit", icon: ClipboardList },
@@ -64,7 +64,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.url === "/console"}
                       className={
                         collapsed
                           ? "flex items-center justify-center h-9 px-2 rounded-md text-sm text-sidebar-muted hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground transition-colors"

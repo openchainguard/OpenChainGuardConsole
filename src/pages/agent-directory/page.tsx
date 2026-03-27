@@ -108,8 +108,67 @@ export default function AgentDirectory() {
         </div>
       </div>
 
-      <div className="bg-card rounded-lg border overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="md:hidden">
+        <ul className="flex flex-col gap-3">
+          {filtered.map((agent) => {
+            const avatarUrl = getAvatarUrl(agent.id);
+            const initials = agent.name
+              .split(" ")
+              .filter(Boolean)
+              .slice(0, 2)
+              .map((s) => s[0]?.toUpperCase())
+              .join("");
+            return (
+              <li key={agent.id}>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/agent/${agent.id}`)}
+                  className="w-full rounded-xl border bg-card p-4 text-left transition-colors active:bg-muted/40 hover:bg-muted/30"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted text-xs font-semibold text-foreground">
+                      <img
+                        src={avatarUrl}
+                        alt=""
+                        className="absolute inset-0 z-10 h-full w-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                      <span className="relative z-0">{initials || "?"}</span>
+                    </div>
+                    <div className="min-w-0 flex-1 space-y-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-medium text-foreground">{agent.name}</span>
+                        <StatusBadge status={agent.status} />
+                      </div>
+                      <p className="font-mono text-xs text-muted-foreground">{truncateAddress(agent.walletAddress)}</p>
+                      <div className="grid grid-cols-2 gap-2 text-xs sm:grid-cols-3">
+                        <div>
+                          <div className="text-muted-foreground">KYA</div>
+                          <div className="font-medium tabular-nums text-foreground">{agent.kyaScore}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground">Daily</div>
+                          <div className="font-medium tabular-nums text-foreground">{formatUSDC(agent.dailySpend)}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground">Txns</div>
+                          <div className="tabular-nums text-foreground">{agent.transactionsToday}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      <div className="hidden bg-card md:block rounded-lg border overflow-hidden">
+        <div className="overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]">
           <table className="w-full min-w-[900px] text-sm">
             <thead>
               <tr className="border-b bg-muted/30">
