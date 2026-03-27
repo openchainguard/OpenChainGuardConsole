@@ -15,11 +15,11 @@ export default function AgentLeaderboard() {
 
       <div className="bg-card rounded-lg border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[680px] text-sm">
             <thead>
               <tr className="border-b bg-muted/30">
                 {["Rank", "Agent", "KYA Score", "TVS", "Block Rate"].map((h) => (
-                  <th key={h} className="text-left px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
+                  <th key={h} className="text-left px-4 sm:px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
                     {h}
                   </th>
                 ))}
@@ -37,8 +37,8 @@ export default function AgentLeaderboard() {
 
                 return (
                   <tr key={agent.id} className="hover:bg-muted/20 transition-colors">
-                    <td className="px-5 py-3 text-xs font-medium text-muted-foreground">#{i + 1}</td>
-                    <td className="px-5 py-3">
+                    <td className="px-4 sm:px-5 py-3 text-xs font-medium text-muted-foreground">#{i + 1}</td>
+                    <td className="px-4 sm:px-5 py-3">
                       <div className="flex items-center gap-3">
                         <div className="h-8 w-8 rounded-full overflow-hidden bg-muted flex items-center justify-center text-xs font-semibold text-foreground">
                           <img
@@ -60,14 +60,14 @@ export default function AgentLeaderboard() {
                         <span className="text-sm font-medium text-foreground">{agent.name}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-3">
+                    <td className="px-4 sm:px-5 py-3">
                       <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground tabular-nums">
                         <span className="h-2 w-2 rounded-full bg-primary" />
                         {agent.kyaScore}
                       </span>
                     </td>
-                    <td className="px-5 py-3 text-sm text-foreground tabular-nums">{formatUSDC(agent.dailyLimit * 30)}</td>
-                    <td className="px-5 py-3 text-sm text-muted-foreground tabular-nums">
+                    <td className="px-4 sm:px-5 py-3 text-sm text-foreground tabular-nums">{formatUSDC(agent.dailyLimit * 30)}</td>
+                    <td className="px-4 sm:px-5 py-3 text-sm text-muted-foreground tabular-nums">
                       {(Math.random() * 5).toFixed(1)}%
                     </td>
                   </tr>

@@ -29,16 +29,16 @@ export default function PolicyEditor() {
 
   return (
     <div>
-      <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-5 py-5">
+      <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-4 sm:px-5 py-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-xl font-semibold text-foreground">Policy Editor</h1>
             <p className="text-sm text-muted-foreground">Configure agent governance rules</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex w-full sm:w-auto flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <Dialog open={proposalOpen} onOpenChange={setProposalOpen}>
               <DialogTrigger asChild>
-                <Button className="gap-2"><Clock className="w-4 h-4" /> Propose change</Button>
+                <Button className="gap-2 w-full sm:w-auto"><Clock className="w-4 h-4" /> Propose change</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
@@ -87,7 +87,7 @@ export default function PolicyEditor() {
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" className="gap-2"><ShieldAlert className="w-4 h-4" /> Emergency freeze</Button>
+                <Button variant="destructive" className="gap-2 w-full sm:w-auto"><ShieldAlert className="w-4 h-4" /> Emergency freeze</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -149,9 +149,9 @@ export default function PolicyEditor() {
               </Badge>
             ))}
           </div>
-          <div className="flex gap-2">
-            <Input placeholder="Token symbol" value={newToken} onChange={e => setNewToken(e.target.value)} className="max-w-[160px] h-9" />
-            <Button variant="outline" size="sm" onClick={() => { if (newToken) { setPolicy({ ...policy, allowedTokens: [...policy.allowedTokens, { symbol: newToken.toUpperCase(), address: '0x...' }] }); setNewToken(''); } }}>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Input placeholder="Token symbol" value={newToken} onChange={e => setNewToken(e.target.value)} className="w-full sm:max-w-[160px] h-9" />
+            <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={() => { if (newToken) { setPolicy({ ...policy, allowedTokens: [...policy.allowedTokens, { symbol: newToken.toUpperCase(), address: '0x...' }] }); setNewToken(''); } }}>
               <Plus className="w-3.5 h-3.5 mr-1" /> Add
             </Button>
           </div>

@@ -21,7 +21,7 @@ export default function ProtocolStats() {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
         {[
           { label: 'TVS', value: formatUSDC(tvs) },
           { label: 'Active Agents', value: agents.filter(a => a.status === 'Active').length },
@@ -38,9 +38,9 @@ export default function ProtocolStats() {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="lg:col-span-2 bg-card rounded-lg border p-5">
+        <div className="lg:col-span-2 bg-card rounded-lg border p-4 sm:p-5">
           <h2 className="text-sm font-medium text-foreground mb-4">Daily Volume (30 days)</h2>
-          <ResponsiveContainer width="100%" height={280}>
+          <ResponsiveContainer width="100%" height={250}>
             <BarChart data={dailyVolumeData}>
               <XAxis dataKey="date" tick={{ fontSize: 10 }} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} />
               <YAxis tick={{ fontSize: 10 }} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} tickFormatter={v => `${(v / 1000).toFixed(0)}k`} />
@@ -51,7 +51,7 @@ export default function ProtocolStats() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-card rounded-lg border p-5">
+        <div className="bg-card rounded-lg border p-4 sm:p-5">
           <h2 className="text-sm font-medium text-foreground mb-4">Block Reasons</h2>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>

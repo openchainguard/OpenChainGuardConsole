@@ -41,7 +41,7 @@ export default function AgentDirectory() {
 
   return (
     <div>
-      <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-5 py-5">
+      <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-4 sm:px-5 py-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-xl font-semibold text-foreground">Agent Directory</h1>
@@ -49,7 +49,7 @@ export default function AgentDirectory() {
           </div>
           <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2">
+              <Button className="gap-2 w-full sm:w-auto">
                 <Plus className="w-4 h-4" /> Register New Agent
               </Button>
             </DialogTrigger>
@@ -110,11 +110,11 @@ export default function AgentDirectory() {
 
       <div className="bg-card rounded-lg border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[900px] text-sm">
             <thead>
               <tr className="border-b bg-muted/30">
                 {["Agent", "Status", "KYA", "Daily spend", "Txns today", "Risk trend"].map((h) => (
-                  <th key={h} className="text-left px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
+                  <th key={h} className="text-left px-4 sm:px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
                     {h}
                   </th>
                 ))}
@@ -135,7 +135,7 @@ export default function AgentDirectory() {
                     onClick={() => navigate(`/agent/${agent.id}`)}
                     className="cursor-pointer hover:bg-muted/20 transition-colors"
                   >
-                    <td className="px-5 py-3">
+                    <td className="px-4 sm:px-5 py-3">
                       <div className="flex items-center gap-3">
                         <div className="h-9 w-9 rounded-full overflow-hidden bg-muted flex items-center justify-center text-xs font-semibold text-foreground">
                           <img
@@ -160,25 +160,25 @@ export default function AgentDirectory() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-3 whitespace-nowrap">
+                    <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
                       <StatusBadge status={agent.status} />
                     </td>
-                    <td className="px-5 py-3 whitespace-nowrap">
+                    <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
                       <span className="inline-flex items-center gap-2">
                         <span className="h-2 w-2 rounded-full bg-primary" />
                         <span className="font-medium text-foreground tabular-nums">{agent.kyaScore}</span>
                       </span>
                     </td>
-                    <td className="px-5 py-3 min-w-[260px]">
+                    <td className="px-4 sm:px-5 py-3 min-w-[260px]">
                       <div className="flex items-baseline justify-between gap-4">
                         <span className="text-sm font-medium text-foreground tabular-nums">{formatUSDC(agent.dailySpend)}</span>
                         <span className="text-xs text-muted-foreground tabular-nums">of {formatUSDC(agent.dailyLimit)}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-3 text-sm text-foreground tabular-nums whitespace-nowrap">
+                    <td className="px-4 sm:px-5 py-3 text-sm text-foreground tabular-nums whitespace-nowrap">
                       {agent.transactionsToday}
                     </td>
-                    <td className="px-5 py-3 whitespace-nowrap">
+                    <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
                       <span
                         className={`text-sm font-medium tabular-nums ${agent.riskTrend > 0 ? "text-destructive" : "text-success"}`}
                       >

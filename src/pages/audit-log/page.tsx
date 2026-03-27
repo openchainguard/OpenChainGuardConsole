@@ -28,7 +28,7 @@ export default function AuditLog() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-foreground mb-1">Audit Log</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-1">Audit Log</h1>
       <p className="text-sm text-muted-foreground mb-6">Complete on-chain decision history</p>
 
       {/* Summary Cards */}
@@ -46,18 +46,18 @@ export default function AuditLog() {
       </div>
 
       {/* Filters */}
-      <div className="flex items-center gap-3 mb-4">
-        <div className="relative flex-1 max-w-md">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+        <div className="relative w-full sm:flex-1 sm:max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input placeholder="Search by agent, hash, decision..." value={search} onChange={e => setSearch(e.target.value)} className="pl-9" />
         </div>
-        <Button variant="outline" size="sm" className="gap-2" onClick={() => setExportOpen(true)}><Download className="w-3.5 h-3.5" /> Export CSV</Button>
+        <Button variant="outline" size="sm" className="gap-2 w-full sm:w-auto" onClick={() => setExportOpen(true)}><Download className="w-3.5 h-3.5" /> Export CSV</Button>
       </div>
 
       {/* Table */}
       <div className="bg-card rounded-xl border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[980px] text-sm">
             <thead>
               <tr className="border-b bg-muted/50">
                 {['Block', 'Time', 'Agent', 'TX Hash', 'Destination', 'Amount', 'Decision', 'Risk', 'Layer'].map(h => (
