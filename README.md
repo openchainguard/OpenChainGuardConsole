@@ -10,7 +10,7 @@ It provides a clean operator console for monitoring agents, reviewing approvals,
 - Tailwind CSS + shadcn/ui
 - React Router
 - TanStack Query
-- Vitest + Testing Library
+- Vitest + Testing Ldbrary
 
 ## Getting Started
 
