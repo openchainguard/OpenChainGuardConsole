@@ -1,6 +1,8 @@
+import { Fragment } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, ExternalLink, ArrowUp, ArrowDown, ShieldAlert, Snowflake } from "lucide-react";
 import { agents, transactions, defaultPolicy, formatUSDC, truncateAddress } from "@/lib/mockData";
+import { useAgentWallet } from "@/hooks/useAgentWallet";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { RiskGauge } from "@/components/shared/RiskGauge";
 import { CopyAddress } from "@/components/shared/CopyAddress";
@@ -18,6 +20,7 @@ export default function AgentDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const agent = agents.find(a => a.id === id);
+  const { chainLabel } = useAgentWallet(id);
   const agentTxns = transactions.filter(t => t.agentId === id);
   const [expandedTx, setExpandedTx] = useState<string | null>(null);
 
@@ -34,10 +37,10 @@ export default function AgentDetail() {
   return (
     <div className="min-w-0">
       <button
-        onClick={() => navigate("/console")}
+        onClick={() => navigate("/agents")}
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" /> Back to Directory
+        <ArrowLeft className="w-4 h-4" /> Back to agents
       </button>
 
       <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-4 sm:px-5 py-5">
@@ -65,8 +68,11 @@ export default function AgentDetail() {
                 <h1 className="text-xl font-semibold text-foreground truncate">{agent.name}</h1>
                 <StatusBadge status={agent.status} />
               </div>
-              <div className="mt-1">
+              <div className="mt-1 space-y-1">
                 <CopyAddress address={agent.walletAddress} showBasescan />
+                <p className="text-[11px] text-muted-foreground">
+                  Guarded wallet · {chainLabel ?? agent.chainLabel ?? "Base"} — use as <code className="text-[10px]">from</code> for UserOps / paid APIs
+                </p>
               </div>
             </div>
           </div>
@@ -105,81 +111,99 @@ export default function AgentDetail() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-card rounded-lg border overflow-hidden">
-          <div className="px-5 py-3 border-b">
+        <div className="lg:col-span-2 bg-card rounded-lg border overflow-hidden min-w-0">
+          <div className="px-4 sm:px-5 py-3 border-b">
             <h2 className="text-sm font-medium text-foreground">Transaction Feed</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] text-sm">
-              <thead>
-                <tr className="border-b bg-muted/30">
-                  {["Time", "Decision", "Destination", "Amount", "Token", "Risk"].map((h) => (
-                    <th key={h} className="text-left px-4 sm:px-5 py-2.5 text-[11px] font-medium text-muted-foreground">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {agentTxns.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="px-4 sm:px-5 py-10 text-center text-sm text-muted-foreground">
-                      No transactions
-                    </td>
-                  </tr>
-                ) : (
-                  agentTxns.map((tx) => (
-                    <>
-                      <tr
-                        key={tx.id}
-                        className="hover:bg-muted/20 transition-colors cursor-pointer"
-                        onClick={() => setExpandedTx(expandedTx === tx.id ? null : tx.id)}
-                      >
-                        <td className="px-4 sm:px-5 py-3 text-xs text-muted-foreground whitespace-nowrap">
+          {agentTxns.length === 0 ? (
+            <div className="px-4 sm:px-5 py-10 text-center text-sm text-muted-foreground">No transactions</div>
+          ) : (
+            <div className="divide-y">
+              <div
+                className="hidden lg:grid lg:grid-cols-[minmax(0,4.25rem)_minmax(0,6.5rem)_minmax(0,1fr)_minmax(0,5.5rem)_minmax(0,3.25rem)_minmax(0,2.75rem)] lg:items-center lg:gap-x-2 px-4 sm:px-5 py-2.5 border-b bg-muted/30 text-[11px] font-medium text-muted-foreground"
+                aria-hidden
+              >
+                <span>Time</span>
+                <span>Decision</span>
+                <span className="min-w-0">Destination</span>
+                <span>Amount</span>
+                <span>Token</span>
+                <span>Risk</span>
+              </div>
+              {agentTxns.map((tx) => (
+                <Fragment key={tx.id}>
+                  <div className="min-w-0">
+                    <button
+                      type="button"
+                      className="w-full text-left px-4 sm:px-5 py-3 hover:bg-muted/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background"
+                      onClick={() => setExpandedTx(expandedTx === tx.id ? null : tx.id)}
+                    >
+                      {/* Desktop+: aligned columns without horizontal scroll */}
+                      <div className="hidden lg:grid lg:grid-cols-[minmax(0,4.25rem)_minmax(0,6.5rem)_minmax(0,1fr)_minmax(0,5.5rem)_minmax(0,3.25rem)_minmax(0,2.75rem)] lg:items-center lg:gap-x-2 lg:gap-y-1">
+                        <div className="text-xs text-muted-foreground tabular-nums whitespace-nowrap">
                           {new Date(tx.timestamp).toLocaleTimeString()}
-                        </td>
-                        <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
+                        </div>
+                        <div className="min-w-0">
                           <StatusBadge status={tx.decision} />
-                        </td>
-                        <td className="px-4 sm:px-5 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">
+                        </div>
+                        <div className="font-mono text-xs text-muted-foreground min-w-0 truncate" title={tx.destination}>
                           {truncateAddress(tx.destination)}
-                        </td>
-                        <td className="px-4 sm:px-5 py-3 text-sm font-medium text-foreground whitespace-nowrap">
+                        </div>
+                        <div className="text-sm font-medium text-foreground tabular-nums whitespace-nowrap">
                           {formatUSDC(tx.amount)}
-                        </td>
-                        <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
-                          <Badge variant="outline" className="text-[10px]">
+                        </div>
+                        <div className="flex justify-start">
+                          <Badge variant="outline" className="text-[10px] shrink-0">
                             {tx.token}
                           </Badge>
-                        </td>
-                        <td className="px-4 sm:px-5 py-3 whitespace-nowrap">
+                        </div>
+                        <div className="flex justify-start">
+                          <div className="h-8 w-8 shrink-0 scale-90 origin-center [&_svg]:max-h-full">
+                            <RiskGauge score={tx.riskScore} />
+                          </div>
+                        </div>
+                      </div>
+                      {/* Mobile: stacked, no sideways scroll */}
+                      <div className="lg:hidden flex items-start justify-between gap-3 min-w-0">
+                        <div className="min-w-0 flex-1 space-y-1.5">
+                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                            <span className="text-xs text-muted-foreground tabular-nums">
+                              {new Date(tx.timestamp).toLocaleTimeString()}
+                            </span>
+                            <StatusBadge status={tx.decision} />
+                            <Badge variant="outline" className="text-[10px]">
+                              {tx.token}
+                            </Badge>
+                          </div>
+                          <p className="font-mono text-xs text-muted-foreground break-all">{truncateAddress(tx.destination)}</p>
+                          <p className="text-sm font-medium text-foreground tabular-nums">{formatUSDC(tx.amount)}</p>
+                        </div>
+                        <div className="h-8 w-8 shrink-0 scale-90 origin-center">
                           <RiskGauge score={tx.riskScore} />
-                        </td>
-                      </tr>
-                      {expandedTx === tx.id && tx.policyChecks && (
-                        <tr key={`${tx.id}-details`}>
-                          <td colSpan={6} className="px-4 sm:px-5 pb-4 pt-0">
-                            <div className="mt-2 rounded-lg border bg-muted/20 p-3">
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                {tx.policyChecks.map((check) => (
-                                  <div key={check.rule} className="flex items-center gap-2 text-xs">
-                                    <span className={`h-2 w-2 rounded-full ${check.passed ? "bg-success" : "bg-destructive"}`} />
-                                    <span className={check.passed ? "text-muted-foreground" : "text-destructive font-medium"}>
-                                      {check.rule}
-                                    </span>
-                                  </div>
-                                ))}
+                        </div>
+                      </div>
+                    </button>
+                    {expandedTx === tx.id && tx.policyChecks && (
+                      <div className="px-4 sm:px-5 pb-4 pt-0 border-t border-transparent">
+                        <div className="rounded-lg border bg-muted/20 p-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {tx.policyChecks.map((check) => (
+                              <div key={check.rule} className="flex items-center gap-2 text-xs min-w-0">
+                                <span className={`h-2 w-2 rounded-full shrink-0 ${check.passed ? "bg-success" : "bg-destructive"}`} />
+                                <span className={check.passed ? "text-muted-foreground break-words" : "text-destructive font-medium break-words"}>
+                                  {check.rule}
+                                </span>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Fragment>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="space-y-4">

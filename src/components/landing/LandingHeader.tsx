@@ -53,7 +53,7 @@ export function LandingHeader({ onOpenSearch }: Props) {
                 ))}
                 <SheetClose asChild>
                   <Link
-                    to="/console"
+                    to="/agents"
                     className="rounded-lg px-3 py-3 text-[15px] font-medium text-primary transition-colors hover:bg-slate-100"
                   >
                     Open console
@@ -90,13 +90,13 @@ export function LandingHeader({ onOpenSearch }: Props) {
             <Search className="h-[18px] w-[18px]" strokeWidth={2} />
           </button>
           <Button size="sm" className="hidden gap-1.5 rounded-full px-5 shadow-md shadow-blue-500/15 sm:inline-flex" asChild>
-            <Link to="/console">
+            <Link to="/agents">
               Start building
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </Button>
           <Button size="sm" className="rounded-full px-4 sm:hidden" asChild>
-            <Link to="/console">Start</Link>
+            <Link to="/agents">Start</Link>
           </Button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import LandingPage from "@/pages/landing/page";
 import DocsPage from "@/pages/docs/page";
@@ -15,7 +15,14 @@ import AuditLog from "@/pages/audit-log/page";
 import ProtocolStats from "@/pages/protocol-stats/page";
 import AgentLeaderboard from "@/pages/agent-leaderboard/page";
 import ProfileSettings from "@/pages/profile-settings/page";
+import ReputationPage from "@/pages/reputation/page";
 import NotFound from "@/pages/not-found/page";
+
+function LegacyAgentRedirect() {
+  const { id } = useParams();
+  if (!id) return <Navigate to="/agents" replace />;
+  return <Navigate to={`/agents/${id}`} replace />;
+}
 
 export function AppRoutes() {
   return (
@@ -28,17 +35,21 @@ export function AppRoutes() {
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/terms" element={<TermsPage />} />
       <Route element={<AppLayout />}>
-        <Route path="/console" element={<Index />} />
-        <Route path="/agent/:id" element={<AgentDetail />} />
+        <Route path="/agents" element={<Index />} />
+        <Route path="/agents/new" element={<Index />} />
+        <Route path="/agents/:id" element={<AgentDetail />} />
+        <Route path="/console" element={<Navigate to="/agents" replace />} />
+        <Route path="/agent/:id" element={<LegacyAgentRedirect />} />
         <Route path="/policy" element={<PolicyEditor />} />
         <Route path="/approvals" element={<ApprovalQueue />} />
         <Route path="/audit" element={<AuditLog />} />
+        <Route path="/reputation" element={<ReputationPage />} />
         <Route path="/stats" element={<ProtocolStats />} />
         <Route path="/leaderboard" element={<AgentLeaderboard />} />
-        <Route path="/profile" element={<ProfileSettings />} />
+        <Route path="/settings" element={<ProfileSettings />} />
+        <Route path="/profile" element={<Navigate to="/settings" replace />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
 }
-

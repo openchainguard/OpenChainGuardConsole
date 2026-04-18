@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Shield, LayoutGrid, SlidersHorizontal, ShieldCheck, ClipboardList, Activity, Trophy, LogOut, User, Settings2 } from "lucide-react";
+import { Shield, LayoutGrid, SlidersHorizontal, ShieldCheck, ClipboardList, Activity, Sparkles, LogOut, User, Settings2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -19,12 +19,12 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
 const navItems = [
-  { title: "Agent Directory", url: "/console", icon: LayoutGrid },
-  { title: "Policy Editor", url: "/policy", icon: SlidersHorizontal },
-  { title: "Approval Queue", url: "/approvals", icon: ShieldCheck },
-  { title: "Audit Log", url: "/audit", icon: ClipboardList },
-  { title: "Protocol Stats", url: "/stats", icon: Activity },
-  { title: "Agent Leaderboard", url: "/leaderboard", icon: Trophy },
+  { title: "Agents", url: "/agents", icon: LayoutGrid },
+  { title: "Approvals", url: "/approvals", icon: ShieldCheck },
+  { title: "Audit", url: "/audit", icon: ClipboardList },
+  { title: "Reputation", url: "/reputation", icon: Sparkles },
+  { title: "Policy editor", url: "/policy", icon: SlidersHorizontal },
+  { title: "Protocol stats", url: "/stats", icon: Activity },
 ];
 
 export function AppSidebar() {
@@ -64,7 +64,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/console"}
+                      end={item.url === "/agents"}
                       className={
                         collapsed
                           ? "flex items-center justify-center h-9 px-2 rounded-md text-sm text-sidebar-muted hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground transition-colors"
@@ -119,11 +119,11 @@ export function AppSidebar() {
                   <DropdownMenuItem
                     className="gap-2"
                     onClick={() => {
-                      navigate("/profile");
+                      navigate("/settings");
                     }}
                   >
                     <User className="h-4 w-4" />
-                    Profile settings
+                    Settings
                   </DropdownMenuItem>
 
                   <DropdownMenuSeparator />

@@ -7,7 +7,7 @@ const sections = [
   {
     title: "Console",
     body: "Supervise agents, review escalations, and act from a single operator surface.",
-    to: "/console",
+    to: "/agents",
   },
   {
     title: "Policy editor",
