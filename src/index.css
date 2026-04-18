@@ -110,6 +110,31 @@
 }
 
 @layer utilities {
+  /**
+   * Thin, low-contrast scrollbar that sits flush with content (no heavy track).
+   * WebKit: transparent track + padded thumb via background-clip.
+   */
+  .scrollbar-seamless {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.22) transparent;
+  }
+  .scrollbar-seamless::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .scrollbar-seamless::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-seamless::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    background-color: hsl(var(--muted-foreground) / 0.2);
+  }
+  .scrollbar-seamless::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.32);
+  }
+
   .safe-pb {
     padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }

@@ -57,7 +57,7 @@ export function LandingSearchCommand({ open, onOpenChange, goToSection, navigate
             value="console dashboard operators"
             onSelect={() => {
               onOpenChange(false);
-              navigate("/console");
+              navigate("/agents");
             }}
           >
             <LayoutDashboard className="mr-2 h-4 w-4 opacity-60" />

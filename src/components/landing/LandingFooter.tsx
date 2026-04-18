@@ -8,7 +8,7 @@ const footerNav = [
   {
     title: "Product",
     links: [
-      { label: "Console", to: "/console" },
+      { label: "App", to: "/agents" },
       { label: "Policy editor", to: "/policy" },
       { label: "Approval queue", to: "/approvals" },
       { label: "Audit log", to: "/audit" },

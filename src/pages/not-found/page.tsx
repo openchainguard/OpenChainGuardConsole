@@ -18,7 +18,7 @@ const NotFound = () => {
             Marketing site
           </Link>
           <span className="hidden text-muted-foreground sm:inline">·</span>
-          <Link to="/console" className="text-primary underline hover:text-primary/90">
+          <Link to="/agents" className="text-primary underline hover:text-primary/90">
             Open console
           </Link>
         </div>

@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Search, Plus, CheckCircle2 } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Search, Plus } from "lucide-react";
 import { agents, truncateAddress, formatUSDC } from "@/lib/mockData";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
+import { AgentSetupWizard } from "@/components/agents/AgentSetupWizard";
 
 const filters = ['All', 'Active', 'Frozen', 'High Risk'] as const;
 
@@ -18,9 +15,12 @@ const getAvatarUrl = (seed: string) =>
 export default function AgentDirectory() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<typeof filters[number]>('All');
-  const [registerOpen, setRegisterOpen] = useState(false);
-  const [registerForm, setRegisterForm] = useState({ name: '', controller: '', policy: '', erc8004: '' });
   const navigate = useNavigate();
+  const location = useLocation();
+  const createModalOpen = location.pathname === "/agents/new";
+  const closeCreateModal = () => {
+    navigate("/agents", { replace: true });
+  };
   const activeAgents = agents.filter(a => a.status === 'Active').length;
   const tvs = 12400000;
   const txnsToday = 171;
@@ -33,45 +33,20 @@ export default function AgentDirectory() {
     return true;
   });
 
-  const handleRegister = () => {
-    setRegisterOpen(false);
-    setRegisterForm({ name: '', controller: '', policy: '', erc8004: '' });
-    toast.success("Agent registered successfully", { description: `${registerForm.name || 'New Agent'} has been added to the directory.` });
-  };
-
   return (
     <div>
+      <AgentSetupWizard open={createModalOpen} onClose={closeCreateModal} />
       <div className="mb-6 rounded-xl border bg-gradient-to-br from-primary/10 via-background to-background px-4 sm:px-5 py-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-semibold text-foreground">Agent Directory</h1>
-            <p className="text-sm text-muted-foreground">Discover and supervise governed agents.</p>
+            <h1 className="text-xl font-semibold text-foreground">Agents</h1>
+            <p className="text-sm text-muted-foreground">Each agent has one guarded smart wallet — policy is attached at setup.</p>
           </div>
-          <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
-            <DialogTrigger asChild>
-              <Button className="gap-2 w-full sm:w-auto">
-                <Plus className="w-4 h-4" /> Register New Agent
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Register New Agent</DialogTitle>
-                <DialogDescription>Add a new AI agent to the governance protocol.</DialogDescription>
-              </DialogHeader>
-              <div className="space-y-4 mt-2">
-                <div><Label>Agent Name</Label><Input placeholder="e.g. Treasury Alpha" className="mt-1" value={registerForm.name} onChange={e => setRegisterForm({ ...registerForm, name: e.target.value })} /></div>
-                <div><Label>Controller Contract</Label><Input placeholder="0x..." className="mt-1 font-mono" value={registerForm.controller} onChange={e => setRegisterForm({ ...registerForm, controller: e.target.value })} /></div>
-                <div><Label>Policy Module Address</Label><Input placeholder="0x..." className="mt-1 font-mono" value={registerForm.policy} onChange={e => setRegisterForm({ ...registerForm, policy: e.target.value })} /></div>
-                <div><Label>ERC-8004 Agent ID</Label><Input placeholder="ERC8004-XXX" className="mt-1 font-mono" value={registerForm.erc8004} onChange={e => setRegisterForm({ ...registerForm, erc8004: e.target.value })} /></div>
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setRegisterOpen(false)}>Cancel</Button>
-                  <Button onClick={handleRegister}>
-                    <CheckCircle2 className="w-4 h-4 mr-1" /> Register Agent
-                  </Button>
-                </DialogFooter>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <Button className="gap-2 w-full sm:w-auto" asChild>
+            <Link to="/agents/new">
+              <Plus className="w-4 h-4" /> Create agent
+            </Link>
+          </Button>
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -122,7 +97,7 @@ export default function AgentDirectory() {
               <li key={agent.id}>
                 <button
                   type="button"
-                  onClick={() => navigate(`/agent/${agent.id}`)}
+                  onClick={() => navigate(`/agents/${agent.id}`)}
                   className="w-full rounded-xl border bg-card p-4 text-left transition-colors active:bg-muted/40 hover:bg-muted/30"
                 >
                   <div className="flex items-start gap-3">
@@ -191,7 +166,7 @@ export default function AgentDirectory() {
                 return (
                   <tr
                     key={agent.id}
-                    onClick={() => navigate(`/agent/${agent.id}`)}
+                    onClick={() => navigate(`/agents/${agent.id}`)}
                     className="cursor-pointer hover:bg-muted/20 transition-colors"
                   >
                     <td className="px-4 sm:px-5 py-3">

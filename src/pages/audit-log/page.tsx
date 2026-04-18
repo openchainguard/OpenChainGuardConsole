@@ -27,7 +27,7 @@ export default function AuditLog() {
   };
 
   return (
-    <div>
+    <div className="min-w-0">
       <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-1">Audit Log</h1>
       <p className="text-sm text-muted-foreground mb-6">Complete on-chain decision history</p>
 
@@ -54,34 +54,87 @@ export default function AuditLog() {
         <Button variant="outline" size="sm" className="gap-2 w-full sm:w-auto" onClick={() => setExportOpen(true)}><Download className="w-3.5 h-3.5" /> Export CSV</Button>
       </div>
 
-      {/* Table */}
-      <div className="bg-card rounded-xl border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[980px] text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                {['Block', 'Time', 'Agent', 'TX Hash', 'Destination', 'Amount', 'Decision', 'Risk', 'Layer'].map(h => (
-                  <th key={h} className="text-left px-4 py-3 text-xs font-medium text-muted-foreground">{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {filtered.map(tx => (
-                <tr key={tx.id} className="hover:bg-muted/30 transition-colors">
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{tx.blockNumber}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">{new Date(tx.timestamp).toLocaleTimeString()}</td>
-                  <td className="px-4 py-3 text-xs font-medium text-foreground">{tx.agentName}</td>
-                  <td className="px-4 py-3"><a href="#" className="font-mono text-xs text-primary hover:underline">{truncateAddress(tx.txHash)}</a></td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{truncateAddress(tx.destination)}</td>
-                  <td className="px-4 py-3 text-xs font-medium text-foreground">{formatUSDC(tx.amount)}</td>
-                  <td className="px-4 py-3"><StatusBadge status={tx.decision} /></td>
-                  <td className="px-4 py-3 text-xs font-medium">{tx.riskScore}</td>
-                  <td className="px-4 py-3"><span className="text-[11px] bg-muted px-2 py-0.5 rounded font-mono">{tx.policyLayer}</span></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Feed: stacked below xl breakpoint; grid from xl — no horizontal scroll */}
+      <div className="bg-card rounded-xl border overflow-hidden min-w-0">
+        {filtered.length === 0 ? (
+          <div className="px-4 py-12 text-center text-sm text-muted-foreground">No transactions match your search.</div>
+        ) : (
+          <div className="divide-y">
+            <div
+              className="hidden xl:grid xl:grid-cols-[4.5rem_4.5rem_minmax(0,7rem)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,5rem)_minmax(0,6rem)_2.5rem_2.75rem] xl:items-center xl:gap-x-2 px-4 py-2.5 border-b bg-muted/50 text-[11px] font-medium text-muted-foreground"
+              aria-hidden
+            >
+              <span>Block</span>
+              <span>Time</span>
+              <span className="min-w-0 truncate">Agent</span>
+              <span className="min-w-0">TX Hash</span>
+              <span className="min-w-0">Destination</span>
+              <span>Amount</span>
+              <span>Decision</span>
+              <span>Risk</span>
+              <span>Layer</span>
+            </div>
+            {filtered.map((tx) => (
+              <div key={tx.id} className="min-w-0">
+                {/* Wide screens */}
+                <div className="hidden xl:grid xl:grid-cols-[4.5rem_4.5rem_minmax(0,7rem)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,5rem)_minmax(0,6rem)_2.5rem_2.75rem] xl:items-center xl:gap-x-2 px-4 py-2.5 hover:bg-muted/30 transition-colors text-sm">
+                  <div className="font-mono text-xs text-muted-foreground tabular-nums">{tx.blockNumber}</div>
+                  <div className="text-xs text-muted-foreground tabular-nums whitespace-nowrap">
+                    {new Date(tx.timestamp).toLocaleTimeString()}
+                  </div>
+                  <div className="text-xs font-medium text-foreground min-w-0 truncate" title={tx.agentName}>
+                    {tx.agentName}
+                  </div>
+                  <div className="min-w-0">
+                    <a href="#" className="font-mono text-xs text-primary hover:underline truncate block" title={tx.txHash}>
+                      {truncateAddress(tx.txHash)}
+                    </a>
+                  </div>
+                  <div className="font-mono text-xs text-muted-foreground min-w-0 truncate" title={tx.destination}>
+                    {truncateAddress(tx.destination)}
+                  </div>
+                  <div className="text-xs font-medium text-foreground tabular-nums whitespace-nowrap">{formatUSDC(tx.amount)}</div>
+                  <div className="min-w-0">
+                    <StatusBadge status={tx.decision} />
+                  </div>
+                  <div className="text-xs font-medium tabular-nums">{tx.riskScore}</div>
+                  <div>
+                    <span className="text-[11px] bg-muted px-2 py-0.5 rounded font-mono">{tx.policyLayer}</span>
+                  </div>
+                </div>
+                {/* Narrow / tablet: card */}
+                <div className="xl:hidden px-4 py-3 space-y-2 hover:bg-muted/30 transition-colors">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground tabular-nums">
+                      <span>#{tx.blockNumber}</span>
+                      <span>·</span>
+                      <span>{new Date(tx.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                    <span className="text-[11px] bg-muted px-2 py-0.5 rounded font-mono shrink-0">{tx.policyLayer}</span>
+                  </div>
+                  <div className="font-medium text-sm text-foreground">{tx.agentName}</div>
+                  <div className="grid grid-cols-1 gap-1 text-xs">
+                    <div className="min-w-0">
+                      <span className="text-muted-foreground">TX </span>
+                      <a href="#" className="font-mono text-primary hover:underline break-all">
+                        {truncateAddress(tx.txHash)}
+                      </a>
+                    </div>
+                    <div className="min-w-0 font-mono text-muted-foreground break-all">
+                      <span className="text-muted-foreground">To </span>
+                      {truncateAddress(tx.destination)}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-sm font-medium tabular-nums">{formatUSDC(tx.amount)}</span>
+                    <StatusBadge status={tx.decision} />
+                    <span className="text-xs text-muted-foreground tabular-nums">Risk {tx.riskScore}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Export CSV Dialog */}

@@ -1,7 +1,9 @@
 export interface Agent {
   id: string;
   name: string;
+  /** Guarded ERC-4337 smart account — the only spend address (`from`) for this agent. */
   walletAddress: string;
+  chainLabel?: string;
   status: 'Active' | 'Frozen' | 'Escalation Pending';
   kyaScore: number;
   reputationScore: number;
@@ -10,7 +12,6 @@ export interface Agent {
   transactionsToday: number;
   riskScore: number;
   riskTrend: number;
-  controllerContract: string;
   policyModule: string;
   erc8004Id: string;
 }
@@ -45,12 +46,12 @@ export interface PolicyConfig {
 }
 
 export const agents: Agent[] = [
-  { id: '1', name: 'Treasury Alpha', walletAddress: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D', status: 'Active', kyaScore: 92, reputationScore: 88, dailySpend: 45000, dailyLimit: 100000, transactionsToday: 34, riskScore: 23, riskTrend: -3, controllerContract: '0xDef1C0ded9bec7F1a1670819833240f027b25EfF', policyModule: '0x1111111254EEB25477B68fb85Ed929f73A960582', erc8004Id: 'ERC8004-001' },
-  { id: '2', name: 'Yield Optimizer', walletAddress: '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45', status: 'Active', kyaScore: 87, reputationScore: 91, dailySpend: 78000, dailyLimit: 100000, transactionsToday: 56, riskScore: 45, riskTrend: 8, controllerContract: '0xE592427A0AEce92De3Edee1F18E0157C05861564', policyModule: '0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD', erc8004Id: 'ERC8004-002' },
-  { id: '3', name: 'Liquidity Guard', walletAddress: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', status: 'Frozen', kyaScore: 64, reputationScore: 72, dailySpend: 0, dailyLimit: 50000, transactionsToday: 0, riskScore: 78, riskTrend: 15, controllerContract: '0x6B175474E89094C44Da98b954EedeAC495271d0F', policyModule: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', erc8004Id: 'ERC8004-003' },
-  { id: '4', name: 'DeFi Sentinel', walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', status: 'Active', kyaScore: 95, reputationScore: 94, dailySpend: 12000, dailyLimit: 200000, transactionsToday: 12, riskScore: 11, riskTrend: -7, controllerContract: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', policyModule: '0xdAC17F958D2ee523a2206206994597C13D831ec7', erc8004Id: 'ERC8004-004' },
-  { id: '5', name: 'Bridge Monitor', walletAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA', status: 'Escalation Pending', kyaScore: 71, reputationScore: 68, dailySpend: 33000, dailyLimit: 75000, transactionsToday: 28, riskScore: 62, riskTrend: 12, controllerContract: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9', policyModule: '0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e', erc8004Id: 'ERC8004-005' },
-  { id: '6', name: 'Staking Manager', walletAddress: '0xD533a949740bb3306d119CC777fa900bA034cd52', status: 'Active', kyaScore: 83, reputationScore: 85, dailySpend: 56000, dailyLimit: 150000, transactionsToday: 41, riskScore: 35, riskTrend: -1, controllerContract: '0x4d224452801ACEd8B2F0aebE155379bb5D594381', policyModule: '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE', erc8004Id: 'ERC8004-006' },
+  { id: '1', name: 'Treasury Alpha', walletAddress: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D', chainLabel: 'Base', status: 'Active', kyaScore: 92, reputationScore: 88, dailySpend: 45000, dailyLimit: 100000, transactionsToday: 34, riskScore: 23, riskTrend: -3, policyModule: '0x1111111254EEB25477B68fb85Ed929f73A960582', erc8004Id: 'ERC8004-001' },
+  { id: '2', name: 'Yield Optimizer', walletAddress: '0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45', chainLabel: 'Base', status: 'Active', kyaScore: 87, reputationScore: 91, dailySpend: 78000, dailyLimit: 100000, transactionsToday: 56, riskScore: 45, riskTrend: 8, policyModule: '0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD', erc8004Id: 'ERC8004-002' },
+  { id: '3', name: 'Liquidity Guard', walletAddress: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', chainLabel: 'Base', status: 'Frozen', kyaScore: 64, reputationScore: 72, dailySpend: 0, dailyLimit: 50000, transactionsToday: 0, riskScore: 78, riskTrend: 15, policyModule: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', erc8004Id: 'ERC8004-003' },
+  { id: '4', name: 'DeFi Sentinel', walletAddress: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', chainLabel: 'Base', status: 'Active', kyaScore: 95, reputationScore: 94, dailySpend: 12000, dailyLimit: 200000, transactionsToday: 12, riskScore: 11, riskTrend: -7, policyModule: '0xdAC17F958D2ee523a2206206994597C13D831ec7', erc8004Id: 'ERC8004-004' },
+  { id: '5', name: 'Bridge Monitor', walletAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA', chainLabel: 'Base', status: 'Escalation Pending', kyaScore: 71, reputationScore: 68, dailySpend: 33000, dailyLimit: 75000, transactionsToday: 28, riskScore: 62, riskTrend: 12, policyModule: '0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e', erc8004Id: 'ERC8004-005' },
+  { id: '6', name: 'Staking Manager', walletAddress: '0xD533a949740bb3306d119CC777fa900bA034cd52', chainLabel: 'Base', status: 'Active', kyaScore: 83, reputationScore: 85, dailySpend: 56000, dailyLimit: 150000, transactionsToday: 41, riskScore: 35, riskTrend: -1, policyModule: '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE', erc8004Id: 'ERC8004-006' },
 ];
 
 export const transactions: Transaction[] = [

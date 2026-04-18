@@ -11,7 +11,7 @@ export function LandingResourcesSection() {
             <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">Resources</h2>
             <p className="mt-2 max-w-xl text-slate-600">Deep dives to align your team before you wire production agents.</p>
           </div>
-          <Link to="/console" className="text-sm font-medium text-primary hover:underline">
+          <Link to="/agents" className="text-sm font-medium text-primary hover:underline">
             Go to console →
           </Link>
         </div>

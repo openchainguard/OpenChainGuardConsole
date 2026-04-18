@@ -16,7 +16,7 @@ export function LandingDevelopersSection() {
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button size="lg" className="h-12 gap-2 rounded-full px-8" asChild>
-              <Link to="/console">
+              <Link to="/agents">
                 Get started
                 <ArrowRight className="h-4 w-4" />
               </Link>

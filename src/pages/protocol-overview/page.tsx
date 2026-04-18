@@ -28,7 +28,7 @@ export default function ProtocolOverviewPage() {
             View the protocol section on the home page
           </Link>{" "}
           for the full marketing layout, or open the{" "}
-          <Link to="/console" className="font-medium text-primary hover:underline">
+          <Link to="/agents" className="font-medium text-primary hover:underline">
             console
           </Link>{" "}
           to explore the demo environment.

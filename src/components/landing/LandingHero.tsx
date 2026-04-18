@@ -29,7 +29,7 @@ export function LandingHero() {
                   className="h-[3.25rem] gap-2 rounded-full px-9 text-base font-semibold shadow-lg shadow-blue-500/25"
                   asChild
                 >
-                  <Link to="/console">
+                  <Link to="/agents">
                     Open the console
                     <ChevronRight className="h-4 w-4" />
                   </Link>
