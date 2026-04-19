@@ -13,16 +13,11 @@ import { LandingStatsGrid } from "@/components/landing/LandingStatsGrid";
 import { useLandingSearch } from "@/components/landing/useLandingSearch";
 
 export default function LandingPage() {
-  const { searchOpen, setSearchOpen, goToSection, navigate } = useLandingSearch();
+  const { searchOpen, setSearchOpen, navigate } = useLandingSearch();
 
   return (
     <div className="min-h-screen min-w-0 overflow-x-hidden bg-white text-slate-900 antialiased selection:bg-blue-100">
-      <LandingSearchCommand
-        open={searchOpen}
-        onOpenChange={setSearchOpen}
-        goToSection={goToSection}
-        navigate={navigate}
-      />
+      <LandingSearchCommand open={searchOpen} onOpenChange={setSearchOpen} navigate={navigate} />
       <LandingHeader onOpenSearch={() => setSearchOpen(true)} />
       <LandingHero />
 

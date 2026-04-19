@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { MarketingArticle } from "@/components/landing/MarketingArticle";
 import { MarketingLayout } from "@/components/landing/MarketingLayout";
+import { DocsPageLayout } from "@/components/docs/DocsPageLayout";
 
 const sections = [
   {
@@ -26,18 +26,47 @@ const sections = [
   },
 ] as const;
 
+const toc = [
+  { id: "developer-guides", label: "Developer guides" },
+  { id: "product-surfaces", label: "Product surfaces" },
+  { id: "protocol", label: "Protocol & stats" },
+] as const;
+
 export default function DocsPage() {
   return (
     <MarketingLayout>
-      <MarketingArticle
+      <DocsPageLayout
         title="Documentation"
-        subtitle="Operator and developer references for OpenChainGuard—governed agents, policy modules, and standards-aligned workflows."
+        description="Operator and developer references for OpenChainGuard—governed agents, policy modules, and standards-aligned workflows."
+        toc={toc}
       >
         <p>
           This documentation hub is a demo scaffold. Wire your own content, API references, and runbooks as you connect
-          controllers, policy contracts, and ERC-4337 / ERC-8004 flows in production.
+          policy contracts and ERC-4337 / ERC-8004 flows in production.
         </p>
-        <h2 className="!mt-12 text-xl font-semibold text-slate-900">Product surfaces</h2>
+
+        <h2 id="developer-guides" className="!mt-12 scroll-mt-28 text-xl font-semibold text-slate-900">
+          Developer guides
+        </h2>
+        <ul className="mt-4 space-y-4">
+          <li>
+            <Link
+              to="/docs/agent-runtime"
+              className="group inline-flex items-center gap-2 font-medium text-primary hover:underline"
+            >
+              Agent runtime integration
+              <ArrowUpRight className="h-4 w-4 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+            <p className="mt-1 text-slate-600">
+              Guarded wallet env vars, UserOperations, x402 <code>from</code>, and where signing happens after you create
+              an agent.
+            </p>
+          </li>
+        </ul>
+
+        <h2 id="product-surfaces" className="!mt-12 scroll-mt-28 text-xl font-semibold text-slate-900">
+          Product surfaces
+        </h2>
         <ul className="mt-4 space-y-4">
           {sections.map((s) => (
             <li key={s.title}>
@@ -52,19 +81,22 @@ export default function DocsPage() {
             </li>
           ))}
         </ul>
-        <h2 className="!mt-12 text-xl font-semibold text-slate-900">Protocol & stats</h2>
+
+        <h2 id="protocol" className="!mt-12 scroll-mt-28 text-xl font-semibold text-slate-900">
+          Protocol & stats
+        </h2>
         <p className="mt-2">
           See the{" "}
           <Link to="/protocol-overview" className="font-medium text-primary hover:underline">
             protocol overview
           </Link>{" "}
-          for how controllers, policy modules, and registries fit together, and{" "}
+          for how policy modules and registries fit together, and{" "}
           <Link to="/stats" className="font-medium text-primary hover:underline">
             protocol stats
           </Link>{" "}
           for demo metrics.
         </p>
-      </MarketingArticle>
+      </DocsPageLayout>
     </MarketingLayout>
   );
 }

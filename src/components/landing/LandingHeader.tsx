@@ -3,11 +3,12 @@ import { ArrowRight, Menu, Search, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
-const navLinks = [
-  { href: "#platform", label: "Platform" },
-  { href: "#product", label: "Solutions" },
-  { href: "#developers", label: "Developers" },
-  { href: "#resources", label: "Resources" },
+const primaryNav = [
+  { to: "/platform", label: "Platform" },
+  { to: "/solutions", label: "Solutions" },
+  { to: "/developers", label: "Developers" },
+  { to: "/resources", label: "Resources" },
+  { to: "/docs", label: "Docs" },
 ] as const;
 
 type Props = {
@@ -41,14 +42,14 @@ export function LandingHeader({ onOpenSearch }: Props) {
                 <SheetTitle className="text-base font-semibold text-slate-900">Menu</SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-1 py-4" aria-label="Mobile primary">
-                {navLinks.map(({ href, label }) => (
-                  <SheetClose asChild key={href}>
-                    <a
-                      href={href}
+                {primaryNav.map((item) => (
+                  <SheetClose asChild key={item.to}>
+                    <Link
+                      to={item.to}
                       className="rounded-lg px-3 py-3 text-[15px] font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
                     >
-                      {label}
-                    </a>
+                      {item.label}
+                    </Link>
                   </SheetClose>
                 ))}
                 <SheetClose asChild>
@@ -65,17 +66,17 @@ export function LandingHeader({ onOpenSearch }: Props) {
         </div>
 
         <nav
-          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-9 lg:flex"
+          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-7 xl:gap-9 lg:flex"
           aria-label="Primary"
         >
-          {navLinks.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
+          {primaryNav.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
               className="text-[13px] font-medium text-slate-600 transition-colors hover:text-slate-900"
             >
-              {label}
-            </a>
+              {item.label}
+            </Link>
           ))}
         </nav>
 
