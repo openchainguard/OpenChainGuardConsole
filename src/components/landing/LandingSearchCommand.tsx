@@ -20,34 +20,38 @@ import {
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  goToSection: (id: string) => void;
   navigate: NavigateFunction;
 };
 
-export function LandingSearchCommand({ open, onOpenChange, goToSection, navigate }: Props) {
+export function LandingSearchCommand({ open, onOpenChange, navigate }: Props) {
+  const go = (path: string) => {
+    onOpenChange(false);
+    navigate(path);
+  };
+
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
       <CommandInput placeholder="Search sections and pages…" />
       <CommandList>
         <CommandEmpty>No matches.</CommandEmpty>
-        <CommandGroup heading="This page">
-          <CommandItem value="platform overview" onSelect={() => goToSection("platform")}>
+        <CommandGroup heading="Marketing">
+          <CommandItem value="platform overview" onSelect={() => go("/platform")}>
             <Layers className="mr-2 h-4 w-4 opacity-60" />
             Platform
           </CommandItem>
-          <CommandItem value="solutions capabilities product" onSelect={() => goToSection("product")}>
+          <CommandItem value="solutions capabilities product" onSelect={() => go("/solutions")}>
             <Cpu className="mr-2 h-4 w-4 opacity-60" />
             Solutions
           </CommandItem>
-          <CommandItem value="protocol how fits together" onSelect={() => goToSection("protocol")}>
+          <CommandItem value="protocol how fits together" onSelect={() => go("/protocol-overview")}>
             <Shield className="mr-2 h-4 w-4 opacity-60" />
             How the protocol fits together
           </CommandItem>
-          <CommandItem value="resources docs" onSelect={() => goToSection("resources")}>
+          <CommandItem value="resources docs" onSelect={() => go("/resources")}>
             <ArrowUpRight className="mr-2 h-4 w-4 opacity-60" />
             Resources
           </CommandItem>
-          <CommandItem value="developers integrate sdk" onSelect={() => goToSection("developers")}>
+          <CommandItem value="developers integrate sdk" onSelect={() => go("/developers")}>
             <Github className="mr-2 h-4 w-4 opacity-60" />
             Developers
           </CommandItem>

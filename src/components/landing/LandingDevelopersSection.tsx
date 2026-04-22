@@ -13,6 +13,14 @@ export function LandingDevelopersSection() {
               Ship an SDK-first integration, then let operators manage limits and approvals from the console—no redeploy
               for every policy tweak.
             </p>
+            <p className="mt-4">
+              <Link
+                to="/docs/agent-runtime"
+                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+              >
+                Agent runtime integration →
+              </Link>
+            </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button size="lg" className="h-12 gap-2 rounded-full px-8" asChild>

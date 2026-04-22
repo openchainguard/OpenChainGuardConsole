@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Shield, LayoutGrid, SlidersHorizontal, ShieldCheck, ClipboardList, Activity, Sparkles, LogOut, User, Settings2 } from "lucide-react";
+import { Shield, LayoutGrid, SlidersHorizontal, ShieldCheck, ClipboardList, Activity, Sparkles, LogOut, User, Settings2, Route } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
   Sidebar,
@@ -20,6 +20,7 @@ import { toast } from "sonner";
 
 const navItems = [
   { title: "Agents", url: "/agents", icon: LayoutGrid },
+  { title: "EnRoute", url: "/agents/runtime", icon: Route },
   { title: "Approvals", url: "/approvals", icon: ShieldCheck },
   { title: "Audit", url: "/audit", icon: ClipboardList },
   { title: "Reputation", url: "/reputation", icon: Sparkles },
@@ -64,7 +65,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/agents"}
+                      end={item.url === "/agents" || item.url === "/agents/runtime"}
                       className={
                         collapsed
                           ? "flex items-center justify-center h-9 px-2 rounded-md text-sm text-sidebar-muted hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground transition-colors"

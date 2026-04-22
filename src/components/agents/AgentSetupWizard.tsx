@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -369,6 +370,16 @@ OPENCHAINGUARD_CHAIN=${values.chain === "base" ? "8453" : "84532"}
                       </Button>
                     </div>
                   </div>
+                  <p className="text-xs text-muted-foreground sm:text-sm">
+                    Copy the env block to the host that runs your agent.{" "}
+                    <Link
+                      to="/docs/agent-runtime"
+                      onClick={onClose}
+                      className="font-medium text-primary underline-offset-4 hover:underline"
+                    >
+                      How this works
+                    </Link>
+                  </p>
                   <div>
                     <Label className="text-xs text-muted-foreground">Runtime env</Label>
                     <pre className="scrollbar-seamless mt-1.5 max-h-32 overflow-y-auto rounded-lg bg-muted p-3 text-[10px] leading-snug whitespace-pre-wrap break-all sm:text-[11px]">{snippet}</pre>
