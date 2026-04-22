@@ -21,6 +21,7 @@ import ProtocolStats from "@/pages/protocol-stats/page";
 import AgentLeaderboard from "@/pages/agent-leaderboard/page";
 import ProfileSettings from "@/pages/profile-settings/page";
 import ReputationPage from "@/pages/reputation/page";
+import AgentRuntimeWiring from "@/pages/agent-runtime-wiring/page";
 import NotFound from "@/pages/not-found/page";
 
 function LegacyAgentRedirect() {
@@ -47,6 +48,7 @@ export function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route path="/agents" element={<Index />} />
         <Route path="/agents/new" element={<Index />} />
+        <Route path="/agents/runtime" element={<AgentRuntimeWiring />} />
         <Route path="/agents/:id" element={<AgentDetail />} />
         <Route path="/console" element={<Navigate to="/agents" replace />} />
         <Route path="/agent/:id" element={<LegacyAgentRedirect />} />
